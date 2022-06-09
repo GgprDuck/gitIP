@@ -3,7 +3,7 @@ const http = require('http');
 const nets = networkInterfaces();
 
 const getIp = function (option) {
-    if (option === 'true') {
+    if (option === true) {
         for (const name of Object.keys(nets)) {
             for (const net of nets[name]) {
                 const familyV4Value = typeof net.family === 'string' ? 'IPv4' : 4
@@ -13,7 +13,7 @@ const getIp = function (option) {
             }
         }
     }
-    else{
+    else if (option === false){
      http.get({ 'host': 'api.ipify.org', 'port': 80, 'path': '/' }, function (resp) {
         resp.on('data', function (ip) {
             console.log("My public IP address is: " + ip);
@@ -21,5 +21,7 @@ const getIp = function (option) {
     });   
     }
 }
+
+getIp(false);
 
 module.exports = getIp;
